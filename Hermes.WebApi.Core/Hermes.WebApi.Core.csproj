@@ -29,7 +29,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Release\Hermes.WebApi.Core.XML</DocumentationFile>
+    <DocumentationFile>bin\Release\Hermes.WebApi.Core.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -60,6 +60,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\AuthorizeResponseMessage.cs" />
     <Compile Include="Common\BasicAuthenticationBase.cs" />
     <Compile Include="Common\ComponentConfiguration.cs" />
     <Compile Include="Common\SkipAuthorizationBase.cs" />
@@ -68,6 +69,8 @@
     <Compile Include="Dependency\DependencyResolverContainer.cs" />
     <Compile Include="Enums\Cacheability.cs" />
     <Compile Include="Enums\RoutingConfig.cs" />
+    <Compile Include="Exceptions\AccessException.cs" />
+    <Compile Include="Exceptions\AuthorizationException.cs" />
     <Compile Include="Exceptions\HermesException.cs" />
     <Compile Include="Extensions\HttpActionResultBase.cs" />
     <Compile Include="Extensions\HttpActionResultExtensions.cs" />

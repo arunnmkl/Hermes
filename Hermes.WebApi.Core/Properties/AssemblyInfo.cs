@@ -35,5 +35,5 @@ using System.Runtime.InteropServices;
 // ------------------ Version Description------------------------------------------
 // 1.0.0.2 => Is remove the Action from the API template
 // 1.0.0.3 => Added Cache capabilities for the HttpResponseMessage as well
-[assembly: AssemblyVersion("1.0.0.3")]
-[assembly: AssemblyFileVersion("1.0.0.3")]
+[assembly: AssemblyVersion("1.0.0.4")]
+[assembly: AssemblyFileVersion("1.0.0.4")]

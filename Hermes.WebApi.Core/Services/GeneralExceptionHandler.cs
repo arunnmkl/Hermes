@@ -44,7 +44,7 @@ namespace Hermes.WebApi.Core.Services
                 || context.ExceptionContext.Exception is AuthorizationException)
             {
                 contentMessage = context.ExceptionContext.Exception.Message;
-                context.Result = new GeneralErrorResult("Access Denied", context.ExceptionContext.Request, contentMessage, HttpStatusCode.Unauthorized);
+                context.Result = new GeneralErrorResult("Unauthorized due to ACL on resource", context.ExceptionContext.Request, contentMessage, HttpStatusCode.Forbidden);
                 return;
             }
 

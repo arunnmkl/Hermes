@@ -65,7 +65,7 @@
     <Compile Include="Common\ComponentConfiguration.cs" />
     <Compile Include="Common\SkipAuthorizationBase.cs" />
     <Compile Include="Config.cs" />
-    <Compile Include="Configuration\Configuration.cs" />
+    <Compile Include="Security\Configuration\Configuration.cs" />
     <Compile Include="Dependency\DependencyResolverContainer.cs" />
     <Compile Include="Enums\Cacheability.cs" />
     <Compile Include="Enums\RoutingConfig.cs" />
@@ -90,6 +90,8 @@
     <Compile Include="Interfaces\ICSRFValidation.cs" />
     <Compile Include="Interfaces\ILog.cs" />
     <Compile Include="Results\CachedResult.cs" />
+    <Compile Include="Security\HermesIdentity.cs" />
+    <Compile Include="Security\HermesPrincipal.cs" />
     <Compile Include="Services\GeneralExceptionHandler.cs" />
     <Compile Include="Filters\HermesAuthorizationAttribute.cs" />
     <Compile Include="Handlers\ApiKeyHandler.cs" />

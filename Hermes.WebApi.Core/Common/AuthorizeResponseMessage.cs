@@ -108,6 +108,20 @@ namespace Hermes.WebApi.Core.Common
                 return new ResponseError(401, "Access Denied");
             }
         }
+
+        /// <summary>
+        /// Gets the no principal.
+        /// </summary>
+        /// <value>
+        /// The no principal.
+        /// </value>
+        public static ResponseError NoPrincipal
+        {
+            get
+            {
+                return new ResponseError(401, "No current principal");
+            }
+        }
     }
 
     /// <summary>

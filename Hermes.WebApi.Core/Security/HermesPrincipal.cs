@@ -190,6 +190,20 @@ namespace Hermes.WebApi.Core.Security
         }
 
         /// <summary>
+        /// Gets the authentication client.
+        /// </summary>
+        /// <value>
+        /// The authentication client.
+        /// </value>
+        public string AuthClient
+        {
+            get
+            {
+                return FindFirstValue<string>(HermesIdentity.AuthClientClaimType);
+            }
+        }
+
+        /// <summary>
         /// Finds the first value.
         /// </summary>
         /// <typeparam name="T">type</typeparam>

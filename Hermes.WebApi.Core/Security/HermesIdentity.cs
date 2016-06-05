@@ -43,6 +43,11 @@ namespace Hermes.WebApi.Core.Security
         public const string SIDClaimType = "http://schemas.dreamorbit.com/Hermes.Security.SID";
 
         /// <summary>
+        /// The authentication client claim type
+        /// </summary>
+        public const string AuthClientClaimType = "http://schemas.dreamorbit.com/Hermes.Security.AuthClient";
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="HermesIdentity" /> class.
         /// </summary>
         /// <param name="claims">The claims with which to populate the claims identity.</param>
@@ -66,6 +71,9 @@ namespace Hermes.WebApi.Core.Security
 
             // Roles
             AddClaims(from role in claims where role.Type == RolesClaimType select role);
+
+            // AuthClient
+            AddClaims(from authClient in claims where authClient.Type == AuthClientClaimType select authClient);
         }
 
         /// <summary>

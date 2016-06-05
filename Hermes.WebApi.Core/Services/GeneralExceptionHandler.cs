@@ -35,7 +35,17 @@ namespace Hermes.WebApi.Core.Services
         {
             string contentMessage = "Oops! Sorry! Something went wrong. Please try again after some time.";
 
-            if (!Configuration.Current.ExceptionSuppressed)
+            if (Configuration.Current.UnHandledExceptionHandled)
+            {
+                object errorMessage = new
+                {
+                    Message = contentMessage,
+                    MessageDetail = context.ExceptionContext.Exception.Message ?? string.Concat("Exception Message: ", context.ExceptionContext.Exception.ToString())
+                };
+                context.Result = new GeneralErrorResult(context.ExceptionContext.Request, contentMessage, errorMessage);
+                return;
+            }
+            else if (!Configuration.Current.ExceptionSuppressed)
             {
                 contentMessage = string.Concat(contentMessage, "Exception Message: ", context.ExceptionContext.Exception.ToString());
             }

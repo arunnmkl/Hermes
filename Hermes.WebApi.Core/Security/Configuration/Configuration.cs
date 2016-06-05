@@ -103,6 +103,11 @@ namespace Hermes.WebApi.Core.Security
         private const string EnableMultipleInstance = "enableMultipleInstance";
 
         /// <summary>
+        /// The handle un handled exception
+        /// </summary>
+        private const string HandleUnHandledException = "handleUnHandledException";
+
+        /// <summary>
         /// Stores the current configuration section for api settings
         /// </summary>
         private static Configuration _current;
@@ -309,6 +314,19 @@ namespace Hermes.WebApi.Core.Security
             {
                 this[EnableMultipleInstance] = value;
             }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether [un handled exception handled].
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if [un handled exception handled]; otherwise, <c>false</c>.
+        /// </value>
+        [ConfigurationProperty(HandleUnHandledException, IsRequired = false, DefaultValue = false)]
+        public bool UnHandledExceptionHandled
+        {
+            get { return (bool)this[HandleUnHandledException]; }
+            set { this[HandleUnHandledException] = value; }
         }
 
         #endregion Properties

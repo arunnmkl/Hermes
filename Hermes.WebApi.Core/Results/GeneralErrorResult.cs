@@ -13,6 +13,7 @@
 // ***********************************************************************
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Formatting;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http;
@@ -24,6 +25,11 @@ namespace Hermes.WebApi.Core.Results
     /// </summary>
     public class GeneralErrorResult : IHttpActionResult
     {
+        /// <summary>
+        /// The response message
+        /// </summary>
+        private object responseMessage;
+
         /// <summary>
         /// Gets or sets the request.
         /// </summary>
@@ -57,7 +63,17 @@ namespace Hermes.WebApi.Core.Results
         /// </summary>
         /// <param name="request">The request.</param>
         /// <param name="content">The content.</param>
-        public GeneralErrorResult(HttpRequestMessage request, string content) : this("Internal Server Error", request, content, HttpStatusCode.InternalServerError)
+        public GeneralErrorResult(HttpRequestMessage request, string content) : this("Internal Server Error", request, content, HttpStatusCode.InternalServerError, null)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GeneralErrorResult" /> class.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <param name="content">The content.</param>
+        /// <param name="responseMessage">The response message.</param>
+        public GeneralErrorResult(HttpRequestMessage request, string content, object responseMessage) : this("Internal Server Error", request, content, HttpStatusCode.InternalServerError, responseMessage)
         {
         }
 
@@ -68,12 +84,25 @@ namespace Hermes.WebApi.Core.Results
         /// <param name="request">The request.</param>
         /// <param name="content">The content.</param>
         /// <param name="statusCode">The status code.</param>
-        public GeneralErrorResult(string reasonPhrase, HttpRequestMessage request, string content, HttpStatusCode statusCode)
+        public GeneralErrorResult(string reasonPhrase, HttpRequestMessage request, string content, HttpStatusCode statusCode) : this("Internal Server Error", request, content, statusCode, null)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GeneralErrorResult" /> class.
+        /// </summary>
+        /// <param name="reasonPhrase">The reason phrase.</param>
+        /// <param name="request">The request.</param>
+        /// <param name="content">The content.</param>
+        /// <param name="statusCode">The status code.</param>
+        /// <param name="responseMessage">The response message.</param>
+        public GeneralErrorResult(string reasonPhrase, HttpRequestMessage request, string content, HttpStatusCode statusCode, object responseMessage)
         {
             ReasonPhrase = reasonPhrase;
             Request = request;
             Content = content;
             StatusCode = statusCode;
+            this.responseMessage = responseMessage;
         }
 
         /// <summary>
@@ -84,6 +113,11 @@ namespace Hermes.WebApi.Core.Results
         public Task<HttpResponseMessage> ExecuteAsync(CancellationToken cancellationToken)
         {
             HttpResponseMessage response = Request.CreateResponse(StatusCode, Content);
+            if (responseMessage != null)
+            {
+                MediaTypeFormatter jsonFormatter = new JsonMediaTypeFormatter();
+                response.Content = new ObjectContent<object>(responseMessage, jsonFormatter);
+            }
             response.RequestMessage = Request;
             response.ReasonPhrase = ReasonPhrase;
             return Task.FromResult(response);

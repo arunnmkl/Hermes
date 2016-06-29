@@ -35,7 +35,15 @@ namespace Hermes.WebApi.Core.Services
         {
             string contentMessage = "Oops! Sorry! Something went wrong. Please try again after some time.";
 
-            if (Configuration.Current.UnHandledExceptionHandled)
+            if (context.ExceptionContext.Exception is AccessException
+                || context.ExceptionContext.Exception is AuthorizationException)
+            {
+                contentMessage = context.ExceptionContext.Exception.Message;
+                context.Result = new GeneralErrorResult("Unauthorized due to ACL on resource", context.ExceptionContext.Request, contentMessage, HttpStatusCode.Forbidden);
+                return;
+            }
+
+            if (Configuration.Current.IsHandleUnHandledException)
             {
                 object errorMessage = new
                 {
@@ -48,14 +56,6 @@ namespace Hermes.WebApi.Core.Services
             else if (!Configuration.Current.ExceptionSuppressed)
             {
                 contentMessage = string.Concat(contentMessage, "Exception Message: ", context.ExceptionContext.Exception.ToString());
-            }
-
-            if (context.ExceptionContext.Exception is AccessException
-                || context.ExceptionContext.Exception is AuthorizationException)
-            {
-                contentMessage = context.ExceptionContext.Exception.Message;
-                context.Result = new GeneralErrorResult("Unauthorized due to ACL on resource", context.ExceptionContext.Request, contentMessage, HttpStatusCode.Forbidden);
-                return;
             }
 
             context.Result = new GeneralErrorResult(context.ExceptionContext.Request, contentMessage);

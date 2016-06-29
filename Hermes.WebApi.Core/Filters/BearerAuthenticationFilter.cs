@@ -57,6 +57,7 @@ namespace Hermes.WebApi.Core.Filters
             {
                 if (AuthenticationCommand.SkipAuthorization(context.ActionContext))
                 {
+                    SetPrincipal(context, context.Principal, true);
                     return;
                 }
 
@@ -119,7 +120,8 @@ namespace Hermes.WebApi.Core.Filters
         /// </summary>
         /// <param name="context">The context.</param>
         /// <param name="principal">The principal.</param>
-        private void SetPrincipal(HttpAuthenticationContext context, IPrincipal principal)
+        /// <param name="skipException">if set to <c>true</c> [skip exception].</param>
+        private void SetPrincipal(HttpAuthenticationContext context, IPrincipal principal, bool skipException = false)
         {
             Thread.CurrentPrincipal = principal;
 
@@ -127,14 +129,20 @@ namespace Hermes.WebApi.Core.Filters
             if (context != null)
             {
                 var claimsPrincipal = principal as ClaimsPrincipal;
-                if (claimsPrincipal == null)
+                if (claimsPrincipal == null && !skipException)
                 {
                     context.ErrorResult = new AuthenticationFailureResult(context.Request, AuthorizeResponseMessage.NoPrincipal);
                     return;
                 }
                 else if (!(claimsPrincipal is HermesPrincipal))
                 {
-                    context.Principal = new HermesPrincipal((ClaimsPrincipal)claimsPrincipal);
+                    var hermesPrincipal = new HermesPrincipal(claimsPrincipal);
+                    context.Principal = hermesPrincipal;
+
+                    if (System.Web.HttpContext.Current != null)
+                    {
+                        System.Web.HttpContext.Current.User = hermesPrincipal;
+                    }
                 }
             }
         }

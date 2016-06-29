@@ -108,6 +108,11 @@ namespace Hermes.WebApi.Core.Security
         private const string HandleUnHandledException = "handleUnHandledException";
 
         /// <summary>
+        /// The password change validation
+        /// </summary>
+        private const string PasswordChangeValidation = "passwordChangeValidation";
+
+        /// <summary>
         /// Stores the current configuration section for api settings
         /// </summary>
         private static Configuration _current;
@@ -317,16 +322,29 @@ namespace Hermes.WebApi.Core.Security
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether [un handled exception handled].
+        /// Gets or sets a value indicating whether this instance is handle un handled exception.
         /// </summary>
         /// <value>
-        /// <c>true</c> if [un handled exception handled]; otherwise, <c>false</c>.
+        /// <c>true</c> if this instance is handle un handled exception; otherwise, <c>false</c>.
         /// </value>
         [ConfigurationProperty(HandleUnHandledException, IsRequired = false, DefaultValue = false)]
-        public bool UnHandledExceptionHandled
+        public bool IsHandleUnHandledException
         {
             get { return (bool)this[HandleUnHandledException]; }
             set { this[HandleUnHandledException] = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether [validate password change].
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if [validate password change]; otherwise, <c>false</c>.
+        /// </value>
+        [ConfigurationProperty(PasswordChangeValidation, IsRequired = false, DefaultValue = false)]
+        public bool ValidatePasswordChange
+        {
+            get { return (bool)this[PasswordChangeValidation]; }
+            set { this[PasswordChangeValidation] = value; }
         }
 
         #endregion Properties

@@ -44,7 +44,10 @@ namespace Hermes.WebApi.Core.Security
         /// <param name="claimsPrincipal">The claims principal.</param>
         public HermesPrincipal(ClaimsPrincipal claimsPrincipal) : base(claimsPrincipal)
         {
-            identity = new HermesIdentity(claimsPrincipal.Identity);
+            if (claimsPrincipal != null)
+            {
+                identity = new HermesIdentity(claimsPrincipal.Identity);
+            }
         }
 
         /// <summary>

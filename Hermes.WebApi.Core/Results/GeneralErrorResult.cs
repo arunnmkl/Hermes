@@ -84,7 +84,7 @@ namespace Hermes.WebApi.Core.Results
         /// <param name="request">The request.</param>
         /// <param name="content">The content.</param>
         /// <param name="statusCode">The status code.</param>
-        public GeneralErrorResult(string reasonPhrase, HttpRequestMessage request, string content, HttpStatusCode statusCode) : this("Internal Server Error", request, content, statusCode, null)
+        public GeneralErrorResult(string reasonPhrase, HttpRequestMessage request, string content, HttpStatusCode statusCode) : this(reasonPhrase, request, content, statusCode, null)
         {
         }
 

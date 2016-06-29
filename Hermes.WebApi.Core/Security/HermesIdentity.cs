@@ -48,32 +48,43 @@ namespace Hermes.WebApi.Core.Security
         public const string AuthClientClaimType = "http://schemas.dreamorbit.com/Hermes.Security.AuthClient";
 
         /// <summary>
+        /// The password timestamp claim type
+        /// </summary>
+        public const string PasswordTimestampClaimType = "http://schemas.dreamorbit.com/Hermes.Security.PasswordTimestamp";
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="HermesIdentity" /> class.
         /// </summary>
         /// <param name="claims">The claims with which to populate the claims identity.</param>
         /// <param name="authenticationType">The type of authentication used.</param>
         public HermesIdentity(IEnumerable<Claim> claims, string authenticationType) : base(authenticationType: authenticationType)
         {
-            // Username
-            AddClaims(from name in claims where name.Type == UsernameClaimType select name);
+            if (claims != null)
+            {
+                // Username
+                AddClaims(from name in claims where name.Type == UsernameClaimType select name);
 
-            // UserId
-            AddClaims(from userId in claims where userId.Type == UserIdClaimType select userId);
+                // UserId
+                AddClaims(from userId in claims where userId.Type == UserIdClaimType select userId);
 
-            // Security Id's
-            AddClaims(from sids in claims where sids.Type == SecurityIdsClaimType select sids);
+                // Security Id's
+                AddClaims(from sids in claims where sids.Type == SecurityIdsClaimType select sids);
 
-            // SID
-            AddClaims(from sid in claims where sid.Type == SIDClaimType select sid);
+                // SID
+                AddClaims(from sid in claims where sid.Type == SIDClaimType select sid);
 
-            // Authentication Token
-            AddClaims(from authToken in claims where authToken.Type == AuthTokenClaimType select authToken);
+                // Authentication Token
+                AddClaims(from authToken in claims where authToken.Type == AuthTokenClaimType select authToken);
 
-            // Roles
-            AddClaims(from role in claims where role.Type == RolesClaimType select role);
+                // Roles
+                AddClaims(from role in claims where role.Type == RolesClaimType select role);
 
-            // AuthClient
-            AddClaims(from authClient in claims where authClient.Type == AuthClientClaimType select authClient);
+                // AuthClient
+                AddClaims(from authClient in claims where authClient.Type == AuthClientClaimType select authClient);
+
+                // PasswordTimestamp
+                AddClaims(from timeStamp in claims where timeStamp.Type == PasswordTimestampClaimType select timeStamp);
+            }
         }
 
         /// <summary>

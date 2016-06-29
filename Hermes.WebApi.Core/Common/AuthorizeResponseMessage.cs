@@ -122,6 +122,20 @@ namespace Hermes.WebApi.Core.Common
                 return new ResponseError(401, "No current principal");
             }
         }
+
+        /// <summary>
+        /// Gets the altered credential.
+        /// </summary>
+        /// <value>
+        /// The altered credential.
+        /// </value>
+        public static ResponseError AlteredCredential
+        {
+            get
+            {
+                return new ResponseError(401, "Your password has been changed.");
+            }
+        }
     }
 
     /// <summary>

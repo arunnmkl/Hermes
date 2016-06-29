@@ -1,25 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Security.Principal;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
-using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
 using Hermes.WebApi.Core.Interfaces;
-using Hermes.WebApi.Core.Results;
 
 namespace Hermes.WebApi.Core.Common
 {
     /// <summary>
     /// Bearer authentication base class.
     /// </summary>
-    /// <seealso cref="Hermes.WebApi.Core.Common.SkipAuthorizationBase" />
-    /// <seealso cref="Hermes.WebApi.Core.Interfaces.IBearerAuthentication" />
+    /// <seealso cref="SkipAuthorizationBase" />
+    /// <seealso cref="IBearerAuthentication" />
     public abstract class BearerAuthenticationBase : SkipAuthorizationBase, IBearerAuthentication
     {
         /// <summary>
@@ -97,7 +92,7 @@ namespace Hermes.WebApi.Core.Common
 
             // 3. If there are authorization token but the filter does not recognize the 
             //    authentication scheme, do nothing.
-            if (authorization.Scheme != "Bearer")
+            if (authorization.Scheme != "Bearer" && authorization.Scheme != "bearer")
             {
                 ErrorMessage = AuthorizeResponseMessage.RequireAuthorization;
                 return null;
